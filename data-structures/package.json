@@ -1,0 +1,22 @@
+{
+  "name": "data-structures",
+  "version": "0.0.0",
+  "description": "question 3",
+  "main": "index.js",
+  "scripts": {
+    "test": "vows"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:pretorh/nreality-journeyman-prework.git"
+  },
+  "author": "Hendri Pretorius",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pretorh/nreality-journeyman-prework/issues"
+  },
+  "homepage": "https://github.com/pretorh/nreality-journeyman-prework",
+  "devDependencies": {
+    "vows": "~0.7.0"
+  }
+}
