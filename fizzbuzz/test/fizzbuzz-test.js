@@ -39,6 +39,10 @@ function getInput5() {
     return getInput(5, function(v) { return v % 3 > 0; });
 }
 
+function getInput15() {
+    return getInput(15, function(v) { return true; });
+}
+
 function callWith(objects, inputs) {
     objects.input = inputs;
     for (var i = 0; i < objects.input.length; i++) {
@@ -96,6 +100,21 @@ vows.describe("fizzbuzz").addBatch({
             },
             "the printer gets the word *Buzz* for each input": function(objects) {
                 assert.allAre(objects.printer.called, "Buzz", objects.input);
+            }
+        }
+    }
+}).addBatch({
+    "given a FizzBuzz controller": {
+        topic: setup(),
+        "when called with multiples of *3* and *5* (multiples of 15)": {
+            topic: function(objects) {
+                return callWith(objects, getInput15());
+            },
+            "the printer is called once for each input": function(objects) {
+                assert.equal(objects.printer.called.length, objects.input.length);
+            },
+            "the printer gets the word *FizzBuzz* for each input": function(objects) {
+                assert.allAre(objects.printer.called, "FizzBuzz", objects.input);
             }
         }
     }

@@ -4,7 +4,9 @@ function FizzBuzz(printer) {
     var self = this;
 
     self.print = function(i) {
-        if (i % 3 == 0) {
+        if (i % 15 == 0) {
+            printer.write("FizzBuzz");
+        } else if (i % 3 == 0) {
             printer.write("Fizz");
         } else if (i % 5 == 0) {
             printer.write("Buzz");
