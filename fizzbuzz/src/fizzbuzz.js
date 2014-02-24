@@ -4,6 +4,10 @@ function FizzBuzz(printer) {
     var self = this;
 
     self.print = function(i) {
-        printer.write(i);
+        if (i % 3 == 0) {
+            printer.write("Fizz");
+        } else {
+            printer.write(i);
+        }
     }
 }
