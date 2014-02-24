@@ -21,6 +21,20 @@ function setup() {
     };
 }
 
+function getInput(multiple, test) {
+    var res = [];
+    while (res.length < TIMES) {
+        var value = Math.floor(Math.random() * 100) * multiple;
+        if (res.indexOf(value) == -1 && test(value))
+            res.push(value);
+    }
+    return res;
+}
+
+function getInput3() {
+    return getInput(3, function(v) { return v % 5 > 0; });
+}
+
 vows.describe("fizzbuzz").addBatch({
     "given a FizzBuzz controller": {
         topic: setup(),
@@ -37,20 +51,18 @@ vows.describe("fizzbuzz").addBatch({
 }).addBatch({
     "given a FizzBuzz controller": {
         topic: setup(),
-        "when called with multiples of *3*": {
+        "when called with multiples of *3* (and not of 5)": {
             topic: function(objects) {
-                objects.input = [];
+                objects.input = getInput3();
                 for (var i = 0; i < TIMES; i++) {
-                    var value = Math.floor(Math.random() * 100) * 3;
-                    objects.input.push(value);
-                    objects.fizzbuzz.print(value);
+                    objects.fizzbuzz.print(objects.input[i]);
                 }
                 return objects;
             },
-            "print is called once for each input": function(objects) {
+            "the printer is called once for each input": function(objects) {
                 assert.equal(objects.printer.called.length, objects.input.length);
             },
-            "print gets the word *Fizz* for each input": function(objects) {
+            "the printer gets the word *Fizz* for each input": function(objects) {
                 for (var i = 0; i < objects.input.length; i++) {
                     assert.equal(objects.printer.called[i], "Fizz",
                         "fail for input #" + i +
