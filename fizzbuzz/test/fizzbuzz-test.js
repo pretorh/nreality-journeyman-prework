@@ -39,6 +39,23 @@ function getInput5() {
     return getInput(5, function(v) { return v % 3 > 0; });
 }
 
+function callWith(objects, inputs) {
+    objects.input = inputs;
+    for (var i = 0; i < objects.input.length; i++) {
+        objects.fizzbuzz.print(objects.input[i]);
+    }
+    return objects;
+}
+
+assert.allAre = function(actuals, expected, input) {
+    for (var i = 0; i < input.length; i++) {
+        assert.isTrue(actuals[i] === expected,
+            "fail for input #" + i +
+            " with value " + input[i] +
+            " got output " + actuals[i]);
+    }
+}
+
 vows.describe("fizzbuzz").addBatch({
     "given a FizzBuzz controller": {
         topic: setup(),
@@ -57,22 +74,13 @@ vows.describe("fizzbuzz").addBatch({
         topic: setup(),
         "when called with multiples of *3* (and not of 5)": {
             topic: function(objects) {
-                objects.input = getInput3();
-                for (var i = 0; i < TIMES; i++) {
-                    objects.fizzbuzz.print(objects.input[i]);
-                }
-                return objects;
+                return callWith(objects, getInput3());
             },
             "the printer is called once for each input": function(objects) {
                 assert.equal(objects.printer.called.length, objects.input.length);
             },
             "the printer gets the word *Fizz* for each input": function(objects) {
-                for (var i = 0; i < objects.input.length; i++) {
-                    assert.equal(objects.printer.called[i], "Fizz",
-                        "fail for input #" + i +
-                        " with value " + objects.input[i] +
-                        " got output " + objects.printer.called[i]);
-                }
+                assert.allAre(objects.printer.called, "Fizz", objects.input);
             }
         }
     }
@@ -81,22 +89,13 @@ vows.describe("fizzbuzz").addBatch({
         topic: setup(),
         "when called with multiples of *5* (and not of 3)": {
             topic: function(objects) {
-                objects.input = getInput5();
-                for (var i = 0; i < TIMES; i++) {
-                    objects.fizzbuzz.print(objects.input[i]);
-                }
-                return objects;
+                return callWith(objects, getInput5());
             },
             "the printer is called once for each input": function(objects) {
                 assert.equal(objects.printer.called.length, objects.input.length);
             },
             "the printer gets the word *Buzz* for each input": function(objects) {
-                for (var i = 0; i < objects.input.length; i++) {
-                    assert.equal(objects.printer.called[i], "Buzz",
-                        "fail for input #" + i +
-                        " with value " + objects.input[i] +
-                        " got output " + objects.printer.called[i]);
-                }
+                assert.allAre(objects.printer.called, "Buzz", objects.input);
             }
         }
     }
