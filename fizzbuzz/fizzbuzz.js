@@ -1,7 +1,5 @@
 #!/usr/bin/node
 
-console.log("nothing here yet");
-
 var fb = require("./");
 var fizzbuzz = new fb.FizzBuzz({ write: function(a) { console.log(a); } });
 for (var i = 1; i <= 100; i++) {
